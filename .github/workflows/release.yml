@@ -1,0 +1,58 @@
+name: Build & Release DMG
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-dmg:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Notification.app
+        run: bash build.sh
+
+      - name: Package Notification.dmg
+        run: |
+          STAGING="$(mktemp -d)"
+          cp -R Notification.app "$STAGING/"
+          ln -s /Applications "$STAGING/Applications"
+          hdiutil create \
+            -volname "Notification" \
+            -srcfolder "$STAGING" \
+            -ov \
+            -format UDZO \
+            Notification.dmg
+          ditto -c -k --sequesterRsrc --keepParent Notification.app Notification.zip
+          rm -rf "$STAGING"
+
+      - name: Upload DMG Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Notification-macOS
+          path: |
+            Notification.dmg
+            Notification.zip
+
+      - name: Publish Release with DMG
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v1.0.${{ github.run_number }}"
+          if gh release view latest >/dev/null 2>&1; then
+            gh release upload latest Notification.dmg Notification.zip --clobber
+          else
+            gh release create latest Notification.dmg Notification.zip \
+              --title "Notification for macOS" \
+              --notes "Download **Notification.dmg**, open it, and drag **Notification** into your **Applications** folder." \
+              --latest
+          fi
