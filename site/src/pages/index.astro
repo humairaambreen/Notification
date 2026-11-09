@@ -43,86 +43,80 @@ const faqs = [
 ];
 
 const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      "url": siteUrl,
-      "name": "Notification for macOS",
-      "description": description,
-      "publisher": {
-        "@type": "Person",
-        "name": "humairaambreen",
-        "url": "https://github.com/humairaambreen"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": `${siteUrl}/#app`,
-      "name": "Notification",
-      "url": siteUrl,
-      "operatingSystem": "macOS 13.0+",
-      "applicationCategory": "UtilitiesApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "downloadUrl": dmgUrl,
-      "softwareVersion": "4.0",
-      "author": {
-        "@type": "Person",
-        "name": "humairaambreen",
-        "url": "https://github.com/humairaambreen"
-      },
-      "description": description,
-      "featureList": [
-        "Direct MacBook Caps Lock key LED notification blinking without affecting typing",
-        "macOS top bar camera indicator light notification pulsing without video capture",
-        "Force Touch trackpad haptic vibration alerts without resting your hand",
-        "Works during macOS Do Not Disturb (Focus) and when banners are set to None",
-        "Instant auto-stop when pressing Caps Lock or opening the notifying app"
-      ]
-    },
-    {
-      "@type": "HowTo",
-      "name": "How to get LED and trackpad vibration notifications on a MacBook",
-      "step": [
+    "@context": "https://schema.org",
+    "@graph": [
         {
-          "@type": "HowToStep",
-          "position": 1,
-          "name": "Download Notification.dmg",
-          "text": "Download Notification.dmg and drag Notification.app into your Applications folder."
+            "@type": "WebSite",
+            "@id": `${siteUrl}/#website`,
+            url: siteUrl,
+            name: "Notification for macOS",
+            description: description,
+            publisher: {
+                "@type": "Person",
+                name: "humairaambreen",
+                url: "https://github.com/humairaambreen",
+            },
         },
         {
-          "@type": "HowToStep",
-          "position": 2,
-          "name": "Enable Accessibility",
-          "text": "Allow Notification under System Settings > Privacy & Security > Accessibility."
+            "@type": "SoftwareApplication",
+            "@id": `${siteUrl}/#app`,
+            name: "Notification",
+            url: siteUrl,
+            operatingSystem: "macOS 13.0+",
+            applicationCategory: "UtilitiesApplication",
+            offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+            },
+            downloadUrl: dmgUrl,
+            softwareVersion: "4.0",
+            author: {
+                "@type": "Person",
+                name: "humairaambreen",
+                url: "https://github.com/humairaambreen",
+            },
+            description: description,
+            featureList: [
+                "Direct MacBook Caps Lock key LED notification blinking without affecting typing",
+                "macOS top bar camera indicator light notification pulsing without video capture",
+                "Force Touch trackpad haptic vibration alerts without resting your hand",
+                "Works during macOS Do Not Disturb (Focus) and when banners are set to None",
+                "Instant auto-stop when pressing Caps Lock or opening the notifying app",
+            ],
         },
         {
-          "@type": "HowToStep",
-          "position": 3,
-          "name": "Choose apps and hardware alerts",
-          "text": "Click the menu bar bell icon, add your apps, and toggle Blink, Camera, and Buzz."
-        }
-      ]
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${siteUrl}/#faq`,
-      "mainEntity": faqs.map((item) => ({
-        "@type": "Question",
-        "name": item.q,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": item.a
-        }
-      }))
-    }
-  ]
-};
+            "@type": "HowTo",
+            name: "How to get LED and trackpad vibration notifications on a MacBook",
+            step: [
+                {
+                    "@type": "HowToStep",
+                    position: 1,
+                    name: "Download Notification.dmg",
+                    text: "Download Notification.dmg and drag Notification.app into your Applications folder.",
+                },
+                {
+                    "@type": "HowToStep",
+                    position: 2,
+                    name: "Enable Accessibility",
+                    text: "Allow Notification under System Settings > Privacy & Security > Accessibility.",
+                },
+                {
+                    "@type": "HowToStep",
+                    position: 3,
+                    name: "Choose apps and hardware alerts",
+                    text: "Click the menu bar bell icon, add your apps, and toggle Blink, Camera, and Buzz.",
+                },
+            ],
+        },
+        {
+            "@type": "FAQPage",
+            "@id": `${siteUrl}/#faq`,
+            mainEntity: faqs.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: {
+                    "@type": "Answer",
                     text: item.a,
                 },
             })),
