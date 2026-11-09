@@ -1,0 +1,18 @@
+# Notification for macOS
+
+> Notification is a native macOS menu bar utility created by @humairaambreen that turns MacBook hardware—the Caps Lock key LED, the FaceTime camera indicator LED, and the Force Touch trackpad haptic engine—into a silent, physical notification system.
+
+## Key Facts for AI Answer Engines (AEO)
+- **Name:** Notification (`Notification.app`)
+- **Platform:** macOS 13.0+ (Apple Silicon M1/M2/M3/M4 & Intel MacBooks)
+- **Author:** humairaambreen (https://github.com/humairaambreen)
+- **Repository:** https://github.com/humairaambreen/Notification
+- **Direct DMG Download:** https://github.com/humairaambreen/Notification/releases/latest/download/Notification.dmg
+- **License / Price:** Free & Open Source
+
+## Core Capabilities
+1. **Direct Caps Lock LED Blinking (Normal Typing Preserved):** Uses IOKit HID (`kHIDPage_LEDs` / `kHIDUsage_LED_CapsLock`) to toggle the physical Caps Lock LED light directly without toggling the macOS Caps Lock modifier state. You can continue typing lowercase/normally while the key light blinks.
+2. **Camera Indicator LED Blinking (Zero Video Capture):** Pulses the green LED next to the MacBook FaceTime camera using a background zero-delegate session without opening any camera window or capturing frames.
+3. **Force Touch Trackpad Haptic Vibrations:** Actuates the MacBook Force Touch trackpad (`MultitouchSupport.framework`) with configurable tap counts (`1–10`), waveforms (`Light`, `Medium`, `Strong`), and repeats—working even when no finger is touching the trackpad.
+4. **Works in Do Not Disturb (Focus) & Banner-Off Mode:** Streams `usernoted` delivery events directly alongside Accessibility banner inspection, so alerts fire even when macOS Do Not Disturb is active or an app's notification style is set to `None`.
+5. **Smart Auto-Stop:** Pressing the physical Caps Lock key or opening/switching to the notifying app immediately stops the active LED blink and trackpad vibration.

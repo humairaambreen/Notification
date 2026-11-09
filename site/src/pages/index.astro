@@ -1,0 +1,1254 @@
+---
+const siteUrl =
+    import.meta.env.PUBLIC_SITE_URL || "https://notification-3tn.pages.dev";
+const googleVerify = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "";
+const bingVerify = import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "";
+const yandexVerify = import.meta.env.PUBLIC_YANDEX_VERIFICATION || "";
+const indexNowKey = import.meta.env.PUBLIC_INDEXNOW_KEY || "";
+
+const dmgUrl =
+    "https://github.com/humairaambreen/Notification/releases/latest/download/Notification.dmg";
+const repoUrl = "https://github.com/humairaambreen/Notification";
+
+const title =
+    "Notification for macOS — Caps Lock LED, Camera Light & Trackpad Haptic Alerts";
+const description =
+    "Turn your MacBook's Caps Lock LED, green camera indicator light, and Force Touch trackpad vibrations into a silent physical notification system for macOS—even in Do Not Disturb.";
+
+const faqs = [
+    {
+        q: "How can I get a notification light on my MacBook?",
+        a: "Notification for macOS turns your MacBook's existing hardware LEDs—the Caps Lock key light and the green indicator light next to the FaceTime camera—into customizable notification lights for any app like WhatsApp, Slack, Messages, or Discord.",
+    },
+    {
+        q: "Does blinking the Caps Lock LED mess up my typing or turn on uppercase?",
+        a: "No. Notification drives the Caps Lock hardware LED element directly via IOKit HID without flipping the macOS Caps Lock modifier state. Your typing stays 100% normal while the light is blinking.",
+    },
+    {
+        q: "Does the camera indicator blink record video or open the camera?",
+        a: "No video or photo is ever captured or displayed. Notification pulses the hardware indicator circuit in the background with a frame-discarding node so no preview window opens and no frames are read.",
+    },
+    {
+        q: "Does it work when macOS Do Not Disturb (Focus) is on or banners are disabled?",
+        a: "Yes. Because Notification listens to macOS usernoted delivery events in addition to on-screen banners, it blinks and vibrates even when Do Not Disturb is enabled or when you set an app's banner style to None in System Settings.",
+    },
+    {
+        q: "How do I stop a blinking or vibrating notification?",
+        a: "It stops automatically in three ways: (1) press the physical Caps Lock key once, (2) open or Cmd-Tab into the app that sent the notification, or (3) let it reach the 'Stop after' duration you configured (from 5 seconds up to 5 minutes).",
+    },
+    {
+        q: "How does the MacBook trackpad vibration work without touching the trackpad?",
+        a: "Notification actuates your MacBook's Force Touch haptic engine directly, generating crisp physical taps and vibrations you can feel on your desk or palm even when your fingers aren't resting on the trackpad.",
+    },
+];
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "SoftwareApplication",
+            name: "Notification",
+            operatingSystem: "macOS 13.0+",
+            applicationCategory: "UtilitiesApplication",
+            offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+            },
+            downloadUrl: dmgUrl,
+            softwareVersion: "4.0",
+            author: {
+                "@type": "Person",
+                name: "humairaambreen",
+                url: "https://github.com/humairaambreen",
+            },
+            description: description,
+            featureList: [
+                "Direct Caps Lock LED notification blinking without affecting typing",
+                "FaceTime camera indicator LED notification blinking",
+                "Force Touch trackpad haptic vibration alerts",
+                "Works during macOS Do Not Disturb and when notification banners are hidden",
+                "Instant auto-stop when pressing Caps Lock or opening the notifying app",
+            ],
+        },
+        {
+            "@type": "FAQPage",
+            mainEntity: faqs.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: {
+                    "@type": "Answer",
+                    text: item.a,
+                },
+            })),
+        },
+    ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta
+            name="keywords"
+            content="macOS notification light, MacBook Caps Lock LED blink, MacBook camera LED notification, Force Touch trackpad vibration notifications, macOS haptic alerts, silent notifications Mac, Do Not Disturb LED alert macOS"
+        />
+        <meta name="author" content="humairaambreen" />
+        <meta
+            name="robots"
+            content="index, follow, max-image-preview:large, max-snippet:-1"
+        />
+        <link rel="canonical" href={siteUrl} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <!-- Search Engine Verification Meta Tags (populated via .env) -->
+        {googleVerify && (
+            <meta name="google-site-verification" content={googleVerify} />
+        )}
+        {bingVerify && <meta name="msvalidate.01" content={bingVerify} />}
+        {yandexVerify && (
+            <meta name="yandex-verification" content={yandexVerify} />
+        )}
+        {indexNowKey && <meta name="indexnow-key" content={indexNowKey} />}
+
+        <!-- OpenGraph / Social -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:site_name" content="Notification for macOS" />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+        <style>
+            :root {
+                --bg: #09090b;
+                --surface: #121215;
+                --surface-2: #18181c;
+                --border: rgba(255, 255, 255, 0.12);
+                --text: #f4f4f6;
+                --muted: #9a9aa6;
+                --green: #32d74b;
+                --green-glow: rgba(50, 215, 75, 0.65);
+                --blue: #0a84ff;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background: radial-gradient(
+                    circle at 50% 0%,
+                    #171720 0%,
+                    var(--bg) 55%
+                );
+                color: var(--text);
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                    "SF Pro Display", "Helvetica Neue", sans-serif;
+                line-height: 1.5;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .container {
+                max-width: 1040px;
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+
+            /* Top Nav */
+            nav {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 700;
+                font-size: 17px;
+                letter-spacing: -0.02em;
+            }
+
+            .brand-icon {
+                width: 28px;
+                height: 28px;
+                border-radius: 7px;
+                background: #1c1c21;
+                border: 1px solid var(--border);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 9px 16px;
+                border-radius: 999px;
+                font-size: 13px;
+                font-weight: 600;
+                border: 1px solid var(--border);
+                background: transparent;
+                color: var(--text);
+                cursor: pointer;
+                transition: all 0.15s ease;
+            }
+
+            .btn:hover {
+                border-color: rgba(255, 255, 255, 0.35);
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .btn-primary {
+                background: var(--text);
+                color: #09090b;
+                border-color: var(--text);
+            }
+
+            .btn-primary:hover {
+                background: #ffffff;
+                transform: translateY(-1px);
+            }
+
+            /* Hero */
+            .hero {
+                text-align: center;
+                padding: 56px 0 32px;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 5px 12px;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.03);
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--muted);
+                margin-bottom: 18px;
+            }
+
+            .badge-dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--green);
+                box-shadow: 0 0 8px var(--green);
+            }
+
+            h1 {
+                font-size: clamp(32px, 5vw, 52px);
+                font-weight: 800;
+                letter-spacing: -0.035em;
+                line-height: 1.08;
+                max-width: 780px;
+                margin: 0 auto 16px;
+            }
+
+            .subtitle {
+                font-size: clamp(16px, 2vw, 19px);
+                color: var(--muted);
+                max-width: 650px;
+                margin: 0 auto 28px;
+            }
+
+            .hero-actions {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin-bottom: 14px;
+            }
+
+            .hero-note {
+                font-size: 12px;
+                color: var(--muted);
+            }
+
+            /* Interactive Hardware Showcase */
+            .showcase {
+                margin: 28px 0 56px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+            }
+
+            /* Simulated macOS Top Bezel + Camera Notch + Menu Bar */
+            .mac-bezel {
+                background: #050507;
+                padding-top: 6px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .mac-menubar {
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+                font-size: 12px;
+                font-weight: 600;
+                background: rgba(25, 25, 32, 0.85);
+                position: relative;
+            }
+
+            .menubar-left,
+            .menubar-right {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .mac-notch {
+                position: absolute;
+                left: 50%;
+                top: -6px;
+                transform: translateX(-50%);
+                width: 156px;
+                height: 28px;
+                background: #000000;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-top: none;
+            }
+
+            .camera-lens {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle at 35% 35%,
+                    #2b3a55,
+                    #090d16 70%
+                );
+                border: 1px solid #222;
+            }
+
+            .camera-led {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #19331e;
+                transition: all 0.08s ease;
+            }
+
+            .camera-led.on {
+                background: var(--green);
+                box-shadow: 0 0 10px 3px var(--green-glow);
+            }
+
+            .menubar-bell {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 3px 8px;
+                border-radius: 5px;
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            /* Showcase Grid: Left = MacBook Hardware, Right = Native Popover UI */
+            .showcase-body {
+                display: grid;
+                grid-template-columns: 1.35fr 1fr;
+                gap: 24px;
+                padding: 28px;
+                align-items: center;
+            }
+
+            @media (max-width: 860px) {
+                .showcase-body {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .hardware-stage {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .stage-controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .status-pill {
+                font-size: 12px;
+                color: var(--muted);
+                margin-left: auto;
+            }
+
+            /* Typing Proof Bar */
+            .typing-bar {
+                background: #0d0d10;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px 14px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 13px;
+            }
+
+            .typing-text {
+                font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                color: #d4d4d8;
+            }
+
+            .typing-badge {
+                font-size: 11px;
+                color: var(--green);
+                font-weight: 600;
+            }
+
+            /* MacBook Keyboard Deck */
+            .keyboard-deck {
+                background: #1b1b20;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 14px;
+                padding: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            }
+
+            .key-row {
+                display: flex;
+                gap: 6px;
+            }
+
+            .key {
+                background: #0d0d10;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-bottom-width: 2px;
+                border-radius: 6px;
+                height: 40px;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                font-weight: 500;
+                color: #d4d4d8;
+                position: relative;
+                user-select: none;
+            }
+
+            .key.wide-1 {
+                flex: 1.5;
+                justify-content: flex-start;
+                padding-left: 10px;
+            }
+
+            .key.wide-caps {
+                flex: 1.85;
+                justify-content: flex-start;
+                padding-left: 10px;
+                padding-top: 10px;
+                cursor: pointer;
+                border-color: rgba(255, 255, 255, 0.24);
+            }
+
+            .key.wide-caps:hover {
+                border-color: rgba(255, 255, 255, 0.45);
+            }
+
+            .key.wide-space {
+                flex: 4.5;
+            }
+
+            .caps-led {
+                position: absolute;
+                top: 7px;
+                left: 10px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #233326;
+                transition: all 0.06s ease;
+            }
+
+            .caps-led.on {
+                background: var(--green);
+                box-shadow: 0 0 10px 3px var(--green-glow);
+            }
+
+            /* Force Touch Trackpad */
+            .trackpad-wrap {
+                display: flex;
+                justify-content: center;
+            }
+
+            .trackpad {
+                width: 250px;
+                height: 130px;
+                background: linear-gradient(180deg, #1b1b21 0%, #15151a 100%);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 14px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                transition: transform 0.06s ease;
+            }
+
+            .trackpad.buzzing {
+                animation: buzz-shake 0.16s infinite;
+                border-color: rgba(50, 215, 75, 0.45);
+            }
+
+            .ripple {
+                position: absolute;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                border: 1.5px solid var(--green);
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .trackpad.buzzing .ripple-1 {
+                animation: ripple-out 0.9s infinite ease-out;
+            }
+
+            .trackpad.buzzing .ripple-2 {
+                animation: ripple-out 0.9s 0.3s infinite ease-out;
+            }
+
+            .trackpad-label {
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--muted);
+                z-index: 1;
+            }
+
+            .trackpad-sub {
+                font-size: 10px;
+                color: rgba(255, 255, 255, 0.4);
+                margin-top: 2px;
+                z-index: 1;
+            }
+
+            @keyframes ripple-out {
+                0% {
+                    transform: scale(0.6);
+                    opacity: 0.85;
+                }
+                100% {
+                    transform: scale(5.5);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes buzz-shake {
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+                25% {
+                    transform: translate(-1.5px, 1px);
+                }
+                50% {
+                    transform: translate(1.5px, -1px);
+                }
+                75% {
+                    transform: translate(-1px, -1px);
+                }
+            }
+
+            /* Replica of the Native Popover UI */
+            .app-popover {
+                background: #1c1c1f;
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                border-radius: 18px;
+                padding: 18px 20px;
+                max-width: 340px;
+                width: 100%;
+                margin: 0 auto;
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+            }
+
+            .pop-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 14px;
+            }
+
+            .pop-back {
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .pop-switch {
+                width: 38px;
+                height: 22px;
+                border-radius: 999px;
+                background: var(--blue);
+                position: relative;
+            }
+
+            .pop-switch::after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: #fff;
+            }
+
+            .pop-app {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .pop-app-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 10px;
+                background: #25d366;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 800;
+                color: #fff;
+                font-size: 20px;
+            }
+
+            .pop-app-name {
+                font-size: 19px;
+                font-weight: 700;
+            }
+
+            .pop-modes {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            .pop-mode-btn {
+                padding: 8px 6px;
+                border-radius: 9px;
+                font-size: 12px;
+                font-weight: 600;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.22);
+                cursor: pointer;
+                background: transparent;
+                color: var(--text);
+            }
+
+            .pop-mode-btn.active {
+                background: var(--text);
+                color: #111;
+                border-color: var(--text);
+            }
+
+            .pop-label {
+                font-size: 12px;
+                font-weight: 700;
+                margin-bottom: 6px;
+            }
+
+            .pop-input {
+                width: 100%;
+                padding: 8px 10px;
+                border-radius: 9px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                font-size: 12px;
+                color: var(--muted);
+                margin-bottom: 12px;
+            }
+
+            .pop-more {
+                padding: 10px 12px;
+                border-radius: 9px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                font-size: 12px;
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 14px;
+            }
+
+            .pop-chips {
+                display: flex;
+                gap: 6px;
+                margin-bottom: 16px;
+            }
+
+            .pop-chip {
+                padding: 4px 10px;
+                border-radius: 999px;
+                font-size: 11px;
+                font-weight: 600;
+                border: 1px solid rgba(255, 255, 255, 0.22);
+            }
+
+            .pop-chip.active {
+                background: var(--text);
+                color: #111;
+                border-color: var(--text);
+            }
+
+            .pop-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 6px;
+            }
+
+            .pop-test-btn {
+                padding: 6px 14px;
+                border-radius: 999px;
+                font-size: 12px;
+                font-weight: 600;
+                background: var(--text);
+                color: #111;
+                border: none;
+                cursor: pointer;
+            }
+
+            .pop-remove {
+                font-size: 12px;
+                font-weight: 600;
+                color: #ff453a;
+            }
+
+            /* Feature Cards */
+            .features {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 18px;
+                margin-bottom: 64px;
+            }
+
+            @media (max-width: 780px) {
+                .features {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 22px;
+            }
+
+            .card h2 {
+                font-size: 17px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .card p {
+                font-size: 14px;
+                color: var(--muted);
+            }
+
+            /* FAQ / AEO Section */
+            .faq-section {
+                margin-bottom: 72px;
+            }
+
+            .section-heading {
+                font-size: 26px;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                margin-bottom: 20px;
+            }
+
+            .faq-list {
+                display: grid;
+                gap: 12px;
+            }
+
+            details.faq-item {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 16px 20px;
+            }
+
+            details.faq-item summary {
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                list-style: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            details.faq-item p {
+                margin-top: 10px;
+                font-size: 14px;
+                color: var(--muted);
+            }
+
+            footer {
+                border-top: 1px solid var(--border);
+                padding: 28px 0 44px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 13px;
+                color: var(--muted);
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <nav>
+                <div class="brand">
+                    <span class="brand-icon">🔔</span>
+                    <span>Notification</span>
+                </div>
+                <div class="nav-links">
+                    <a
+                        class="btn"
+                        href={repoUrl}
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        GitHub
+                    </a>
+                    <a class="btn btn-primary" href={dmgUrl}>
+                        Download .DMG
+                    </a>
+                </div>
+            </nav>
+
+            <header class="hero">
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    <span>
+                        Native macOS Menu Bar App · Works in Do Not Disturb
+                    </span>
+                </div>
+                <h1>
+                    Physical notification lights &amp; trackpad vibrations for
+                    macOS.
+                </h1>
+                <p class="subtitle">
+                    Keep notification banners off and stay in flow.{" "}
+                    <strong>Notification</strong> blinks your MacBook's
+                    <strong>Caps Lock LED</strong>, pulses the{" "}
+                    <strong>green camera light</strong>, and vibrates your
+                    <strong>Force Touch trackpad</strong> when important apps
+                    message you.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href={dmgUrl}>
+                        ⬇ Download Notification.dmg
+                    </a>
+                    <a
+                        class="btn"
+                        href={repoUrl}
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        View Source on GitHub
+                    </a>
+                </div>
+                <p class="hero-note">
+                    macOS 13+ · Apple Silicon &amp; Intel · Free &amp; Open
+                    Source by @humairaambreen
+                </p>
+            </header>
+
+            <!-- Interactive Hardware Visualizer -->
+            <section
+                class="showcase"
+                aria-label="Interactive MacBook notification hardware simulator"
+            >
+                <div class="mac-bezel">
+                    <div class="mac-menubar">
+                        <div class="menubar-left">
+                            <span></span>
+                            <span>Notification</span>
+                        </div>
+                        <div
+                            class="mac-notch"
+                            title="MacBook Top Bezel & Camera Indicator LED"
+                        >
+                            <span class="camera-lens"></span>
+                            <span id="cam-led" class="camera-led on"></span>
+                        </div>
+                        <div class="menubar-right">
+                            <span class="menubar-bell">🔔</span>
+                            <span>Tue 9:41 AM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-body">
+                    <div class="hardware-stage">
+                        <div class="stage-controls">
+                            <button
+                                id="sim-toggle-btn"
+                                class="btn btn-primary"
+                                type="button"
+                            >
+                                Stop Live Alert
+                            </button>
+                            <button id="sim-caps-btn" class="btn" type="button">
+                                Press Caps Lock (Auto-Stop)
+                            </button>
+                            <span id="sim-status" class="status-pill">
+                                Alerting: Blink + Camera + Buzz
+                            </span>
+                        </div>
+
+                        <div class="typing-bar">
+                            <span class="typing-text">
+                                typing stays lowercase while blinking_
+                            </span>
+                            <span class="typing-badge">
+                                ✓ Normal Typing Preserved
+                            </span>
+                        </div>
+
+                        <!-- Simulated MacBook Keyboard -->
+                        <div class="keyboard-deck">
+                            <div class="key-row">
+                                <div class="key wide-1">tab</div>
+                                <div class="key">Q</div>
+                                <div class="key">W</div>
+                                <div class="key">E</div>
+                                <div class="key">R</div>
+                                <div class="key">T</div>
+                                <div class="key">Y</div>
+                                <div class="key">U</div>
+                                <div class="key">I</div>
+                                <div class="key">O</div>
+                                <div class="key">P</div>
+                            </div>
+                            <div class="key-row">
+                                <div
+                                    id="key-capslock"
+                                    class="key wide-caps"
+                                    title="Click to press Caps Lock and stop the alert"
+                                >
+                                    <span
+                                        id="caps-led"
+                                        class="caps-led on"
+                                    ></span>
+                                    <span>caps lock</span>
+                                </div>
+                                <div class="key">A</div>
+                                <div class="key">S</div>
+                                <div class="key">D</div>
+                                <div class="key">F</div>
+                                <div class="key">G</div>
+                                <div class="key">H</div>
+                                <div class="key">J</div>
+                                <div class="key">K</div>
+                                <div class="key">L</div>
+                            </div>
+                            <div class="key-row">
+                                <div class="key wide-1">shift</div>
+                                <div class="key">Z</div>
+                                <div class="key">X</div>
+                                <div class="key">C</div>
+                                <div class="key">V</div>
+                                <div class="key">B</div>
+                                <div class="key">N</div>
+                                <div class="key">M</div>
+                                <div class="key wide-1">return</div>
+                            </div>
+                            <div class="key-row">
+                                <div class="key">fn</div>
+                                <div class="key">control</div>
+                                <div class="key">option</div>
+                                <div class="key">command</div>
+                                <div class="key wide-space"></div>
+                                <div class="key">command</div>
+                                <div class="key">option</div>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Force Touch Trackpad -->
+                        <div class="trackpad-wrap">
+                            <div id="trackpad-box" class="trackpad buzzing">
+                                <span class="ripple ripple-1"></span>
+                                <span class="ripple ripple-2"></span>
+                                <span class="trackpad-label">
+                                    Force Touch Trackpad Haptics
+                                </span>
+                                <span class="trackpad-sub">
+                                    Vibrates without resting your hand
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Native App Popover Replica -->
+                    <div class="app-popover">
+                        <div class="pop-top">
+                            <span class="pop-back">‹ Apps</span>
+                            <span class="pop-switch"></span>
+                        </div>
+                        <div class="pop-app">
+                            <div class="pop-app-icon">W</div>
+                            <div class="pop-app-name">WhatsApp</div>
+                        </div>
+                        <div class="pop-modes">
+                            <button
+                                id="mode-blink"
+                                class="pop-mode-btn active"
+                                type="button"
+                            >
+                                Blink
+                            </button>
+                            <button
+                                id="mode-camera"
+                                class="pop-mode-btn active"
+                                type="button"
+                            >
+                                Camera
+                            </button>
+                            <button
+                                id="mode-buzz"
+                                class="pop-mode-btn active"
+                                type="button"
+                            >
+                                Buzz
+                            </button>
+                        </div>
+                        <div class="pop-label">Only when it contains</div>
+                        <div class="pop-input">
+                            Anything — or a name / website
+                        </div>
+                        <div class="pop-more">
+                            <span>More settings</span>
+                            <span>⌃</span>
+                        </div>
+                        <div class="pop-label">Stop after</div>
+                        <div class="pop-chips">
+                            <span class="pop-chip">10s</span>
+                            <span class="pop-chip active">30s</span>
+                            <span class="pop-chip">1m</span>
+                            <span class="pop-chip">2m</span>
+                            <span class="pop-chip">5m</span>
+                        </div>
+                        <div class="pop-footer">
+                            <button
+                                id="pop-test-btn"
+                                class="pop-test-btn"
+                                type="button"
+                            >
+                                Stop
+                            </button>
+                            <span class="pop-remove">Remove</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Core Features -->
+            <section class="features">
+                <article class="card">
+                    <h2>Caps Lock LED (Light Only)</h2>
+                    <p>
+                        Drives the physical Caps Lock LED via IOKit HID without
+                        toggling Caps Lock on. Your letters never turn uppercase
+                        while the key blinks.
+                    </p>
+                </article>
+                <article class="card">
+                    <h2>Camera Indicator Light</h2>
+                    <p>
+                        Pulses the green light next to your MacBook's FaceTime
+                        camera on a separate schedule—with zero video capture
+                        and no preview window.
+                    </p>
+                </article>
+                <article class="card">
+                    <h2>Trackpad Haptic Buzz</h2>
+                    <p>
+                        Fires your MacBook's Force Touch actuator directly with
+                        customizable tap counts and strength, even when your
+                        hand isn't on the trackpad.
+                    </p>
+                </article>
+            </section>
+
+            <!-- FAQ Section for SEO & AEO -->
+            <section class="faq-section" id="faq">
+                <h2 class="section-heading">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    {faqs.map((item) => (
+                        <details class="faq-item" open>
+                            <summary>{item.q}</summary>
+                            <p>{item.a}</p>
+                        </details>
+                    ))}
+                </div>
+            </section>
+
+            <footer>
+                <span>
+                    Notification for macOS · Built by{" "}
+                    <a
+                        href="https://github.com/humairaambreen"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        @humairaambreen
+                    </a>
+                </span>
+                <div>
+                    <a href={dmgUrl}>Download DMG</a> ·{" "}
+                    <a href={repoUrl} target="_blank" rel="noopener">
+                        GitHub
+                    </a>{" "}
+                    · <a href="/llms.txt">llms.txt</a>
+                </div>
+            </footer>
+        </div>
+
+        <script is:inline>
+            (function () {
+                let running = true;
+                let useBlink = true;
+                let useCamera = true;
+                let useBuzz = true;
+                let ledOn = true;
+
+                const capsLed = document.getElementById("caps-led");
+                const camLed = document.getElementById("cam-led");
+                const trackpad = document.getElementById("trackpad-box");
+                const toggleBtn = document.getElementById("sim-toggle-btn");
+                const popTestBtn = document.getElementById("pop-test-btn");
+                const capsBtn = document.getElementById("sim-caps-btn");
+                const keyCaps = document.getElementById("key-capslock");
+                const statusEl = document.getElementById("sim-status");
+
+                const modeBlinkBtn = document.getElementById("mode-blink");
+                const modeCamBtn = document.getElementById("mode-camera");
+                const modeBuzzBtn = document.getElementById("mode-buzz");
+
+                function syncUI() {
+                    modeBlinkBtn.classList.toggle("active", useBlink);
+                    modeCamBtn.classList.toggle("active", useCamera);
+                    modeBuzzBtn.classList.toggle("active", useBuzz);
+
+                    toggleBtn.textContent = running
+                        ? "Stop Live Alert"
+                        : "Test Live Alert";
+                    popTestBtn.textContent = running ? "Stop" : "Test";
+
+                    const parts = [];
+                    if (useBlink) parts.push("Blink");
+                    if (useCamera) parts.push("Camera");
+                    if (useBuzz) parts.push("Buzz");
+
+                    statusEl.textContent = running
+                        ? "Alerting: " + (parts.join(" + ") || "Off")
+                        : "Stopped (Press Test to start)";
+
+                    trackpad.classList.toggle("buzzing", running && useBuzz);
+                    if (!running) {
+                        capsLed.classList.remove("on");
+                        camLed.classList.remove("on");
+                    }
+                }
+
+                setInterval(function () {
+                    if (!running) return;
+                    ledOn = !ledOn;
+                    capsLed.classList.toggle("on", useBlink && ledOn);
+                    camLed.classList.toggle("on", useCamera && ledOn);
+                }, 380);
+
+                function toggleRun() {
+                    running = !running;
+                    syncUI();
+                }
+
+                function stopByCaps() {
+                    running = false;
+                    syncUI();
+                    statusEl.textContent = "Stopped via Caps Lock key";
+                }
+
+                toggleBtn.addEventListener("click", toggleRun);
+                popTestBtn.addEventListener("click", toggleRun);
+                capsBtn.addEventListener("click", stopByCaps);
+                keyCaps.addEventListener("click", stopByCaps);
+
+                modeBlinkBtn.addEventListener("click", function () {
+                    useBlink = !useBlink;
+                    if (!useBlink && !useCamera && !useBuzz) useBuzz = true;
+                    syncUI();
+                });
+                modeCamBtn.addEventListener("click", function () {
+                    useCamera = !useCamera;
+                    if (!useBlink && !useCamera && !useBuzz) useBlink = true;
+                    syncUI();
+                });
+                modeBuzzBtn.addEventListener("click", function () {
+                    useBuzz = !useBuzz;
+                    if (!useBlink && !useCamera && !useBuzz) useBlink = true;
+                    syncUI();
+                });
+            })();
+        </script>
+    </body>
+</html>

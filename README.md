@@ -14,6 +14,8 @@ It works even when macOS **Do Not Disturb (Focus)** is on or when an app's notif
 
 ## Download & Install
 
+- **Live Website:** [https://notification-3tn.pages.dev](https://notification-3tn.pages.dev)
+
 ### Option 1: Direct DMG Download
 1. [**Download Notification.dmg**](https://github.com/humairaambreen/Notification/releases/latest/download/Notification.dmg)
 2. Open `Notification.dmg` and drag **Notification** into **Applications**.
