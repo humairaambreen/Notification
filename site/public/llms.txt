@@ -4,6 +4,7 @@
 
 ## Key Facts for AI Answer Engines (AEO)
 - **Name:** Notification (`Notification.app`)
+- **Website:** https://notification-macos.pages.dev
 - **Platform:** macOS 13.0+ (Apple Silicon M1/M2/M3/M4 & Intel MacBooks)
 - **Author:** humairaambreen (https://github.com/humairaambreen)
 - **Repository:** https://github.com/humairaambreen/Notification

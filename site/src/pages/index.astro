@@ -1,6 +1,6 @@
 ---
 const siteUrl =
-    import.meta.env.PUBLIC_SITE_URL || "https://notification-3tn.pages.dev";
+    import.meta.env.PUBLIC_SITE_URL || "https://notification-macos.pages.dev";
 const googleVerify = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "";
 const bingVerify = import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "";
 const yandexVerify = import.meta.env.PUBLIC_YANDEX_VERIFICATION || "";
@@ -11,73 +11,118 @@ const dmgUrl =
 const repoUrl = "https://github.com/humairaambreen/Notification";
 
 const title =
-    "Notification for macOS — Caps Lock LED, Camera Light & Trackpad Haptic Alerts";
+    "Notification for macOS — Key Light, Top Bar Camera Light & Trackpad Haptics";
 const description =
-    "Turn your MacBook's Caps Lock LED, green camera indicator light, and Force Touch trackpad vibrations into a silent physical notification system for macOS—even in Do Not Disturb.";
+    "Minimal macOS hardware notification app. Blinks your MacBook key light, pulses the top bar camera indicator, and vibrates your Force Touch trackpad—even in Do Not Disturb.";
 
 const faqs = [
     {
-        q: "How can I get a notification light on my MacBook?",
-        a: "Notification for macOS turns your MacBook's existing hardware LEDs—the Caps Lock key light and the green indicator light next to the FaceTime camera—into customizable notification lights for any app like WhatsApp, Slack, Messages, or Discord.",
+        q: "How do I get a notification light on macOS?",
+        a: "Notification turns your MacBook's existing hardware—the Caps Lock key LED, the green indicator light next to the FaceTime camera, and the Force Touch trackpad actuator—into a silent physical notification system for any macOS app like WhatsApp, Slack, Messages, or Discord.",
     },
     {
-        q: "Does blinking the Caps Lock LED mess up my typing or turn on uppercase?",
-        a: "No. Notification drives the Caps Lock hardware LED element directly via IOKit HID without flipping the macOS Caps Lock modifier state. Your typing stays 100% normal while the light is blinking.",
+        q: "Does blinking the Caps Lock key light affect normal typing?",
+        a: "No. Notification drives the LED element directly via IOKit HID without changing the macOS Caps Lock modifier state, so your typing stays completely lowercase and normal while the key light blinks.",
     },
     {
-        q: "Does the camera indicator blink record video or open the camera?",
-        a: "No video or photo is ever captured or displayed. Notification pulses the hardware indicator circuit in the background with a frame-discarding node so no preview window opens and no frames are read.",
+        q: "Does the top bar camera indicator blink open or record from the camera?",
+        a: "No video or photo is ever captured, and no preview window opens. Notification pulses the hardware indicator circuit in the background using a frame-discarding node.",
     },
     {
-        q: "Does it work when macOS Do Not Disturb (Focus) is on or banners are disabled?",
-        a: "Yes. Because Notification listens to macOS usernoted delivery events in addition to on-screen banners, it blinks and vibrates even when Do Not Disturb is enabled or when you set an app's banner style to None in System Settings.",
+        q: "Does it work during macOS Do Not Disturb (Focus) mode or when banners are hidden?",
+        a: "Yes. Notification listens to macOS usernoted delivery events directly, so your key LED, camera indicator light, and trackpad vibrations fire even when Do Not Disturb is active or when an app's banner style is set to None.",
     },
     {
-        q: "How do I stop a blinking or vibrating notification?",
-        a: "It stops automatically in three ways: (1) press the physical Caps Lock key once, (2) open or Cmd-Tab into the app that sent the notification, or (3) let it reach the 'Stop after' duration you configured (from 5 seconds up to 5 minutes).",
+        q: "How does it stop blinking and vibrating?",
+        a: "Press the physical Caps Lock key once, switch to the app that sent the notification, or let it automatically stop after your configured duration (from 10 seconds up to 5 minutes).",
     },
     {
-        q: "How does the MacBook trackpad vibration work without touching the trackpad?",
-        a: "Notification actuates your MacBook's Force Touch haptic engine directly, generating crisp physical taps and vibrations you can feel on your desk or palm even when your fingers aren't resting on the trackpad.",
+        q: "How does the MacBook trackpad vibrate when my hand isn't resting on it?",
+        a: "Notification actuates your MacBook's Force Touch haptic engine directly via MultitouchSupport, producing crisp physical taps you can feel on the palm rest or hear softly on your desk without touching the glass.",
     },
 ];
 
 const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "Notification for macOS",
+      "description": description,
+      "publisher": {
+        "@type": "Person",
+        "name": "humairaambreen",
+        "url": "https://github.com/humairaambreen"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${siteUrl}/#app`,
+      "name": "Notification",
+      "url": siteUrl,
+      "operatingSystem": "macOS 13.0+",
+      "applicationCategory": "UtilitiesApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "downloadUrl": dmgUrl,
+      "softwareVersion": "4.0",
+      "author": {
+        "@type": "Person",
+        "name": "humairaambreen",
+        "url": "https://github.com/humairaambreen"
+      },
+      "description": description,
+      "featureList": [
+        "Direct MacBook Caps Lock key LED notification blinking without affecting typing",
+        "macOS top bar camera indicator light notification pulsing without video capture",
+        "Force Touch trackpad haptic vibration alerts without resting your hand",
+        "Works during macOS Do Not Disturb (Focus) and when banners are set to None",
+        "Instant auto-stop when pressing Caps Lock or opening the notifying app"
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to get LED and trackpad vibration notifications on a MacBook",
+      "step": [
         {
-            "@type": "SoftwareApplication",
-            name: "Notification",
-            operatingSystem: "macOS 13.0+",
-            applicationCategory: "UtilitiesApplication",
-            offers: {
-                "@type": "Offer",
-                price: "0",
-                priceCurrency: "USD",
-            },
-            downloadUrl: dmgUrl,
-            softwareVersion: "4.0",
-            author: {
-                "@type": "Person",
-                name: "humairaambreen",
-                url: "https://github.com/humairaambreen",
-            },
-            description: description,
-            featureList: [
-                "Direct Caps Lock LED notification blinking without affecting typing",
-                "FaceTime camera indicator LED notification blinking",
-                "Force Touch trackpad haptic vibration alerts",
-                "Works during macOS Do Not Disturb and when notification banners are hidden",
-                "Instant auto-stop when pressing Caps Lock or opening the notifying app",
-            ],
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Download Notification.dmg",
+          "text": "Download Notification.dmg and drag Notification.app into your Applications folder."
         },
         {
-            "@type": "FAQPage",
-            mainEntity: faqs.map((item) => ({
-                "@type": "Question",
-                name: item.q,
-                acceptedAnswer: {
-                    "@type": "Answer",
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Enable Accessibility",
+          "text": "Allow Notification under System Settings > Privacy & Security > Accessibility."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Choose apps and hardware alerts",
+          "text": "Click the menu bar bell icon, add your apps, and toggle Blink, Camera, and Buzz."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      "mainEntity": faqs.map((item) => ({
+        "@type": "Question",
+        "name": item.q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.a
+        }
+      }))
+    }
+  ]
+};
                     text: item.a,
                 },
             })),
@@ -90,12 +135,15 @@ const jsonLd = {
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta
             name="keywords"
-            content="macOS notification light, MacBook Caps Lock LED blink, MacBook camera LED notification, Force Touch trackpad vibration notifications, macOS haptic alerts, silent notifications Mac, Do Not Disturb LED alert macOS"
+            content="macOS notification light, MacBook LED notification, MacBook key light blink, macOS camera light notification, Force Touch trackpad vibration notifications, silent notifications Mac, Do Not Disturb hardware alerts macOS"
         />
         <meta name="author" content="humairaambreen" />
         <meta
@@ -105,7 +153,6 @@ const jsonLd = {
         <link rel="canonical" href={siteUrl} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-        <!-- Search Engine Verification Meta Tags (populated via .env) -->
         {googleVerify && (
             <meta name="google-site-verification" content={googleVerify} />
         )}
@@ -115,14 +162,12 @@ const jsonLd = {
         )}
         {indexNowKey && <meta name="indexnow-key" content={indexNowKey} />}
 
-        <!-- OpenGraph / Social -->
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:site_name" content="Notification for macOS" />
 
-        <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -130,15 +175,45 @@ const jsonLd = {
         <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
         <style>
             :root {
-                --bg: #09090b;
-                --surface: #121215;
-                --surface-2: #18181c;
-                --border: rgba(255, 255, 255, 0.12);
+                --bg: #050507;
+                --card: #101014;
+                --inner: #16161c;
+                --inner-2: #1c1c24;
+                --border: #22222a;
+                --inner-border: #2a2a34;
                 --text: #f4f4f6;
-                --muted: #9a9aa6;
-                --green: #32d74b;
-                --green-glow: rgba(50, 215, 75, 0.65);
-                --blue: #0a84ff;
+                --muted: #8e8e98;
+                --green: #30d158;
+                --green-glow: rgba(48, 209, 88, 0.75);
+                --led-off: #1b2e20;
+                --pop-bg: #18181d;
+                --pop-border: #2b2b34;
+                --pop-line: rgba(255, 255, 255, 0.22);
+                --pop-sub: #a1a1aa;
+                --pop-muted: #8e8e93;
+                --pop-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+            }
+
+            html[data-theme="light"] {
+                --bg: #f3f3f6;
+                --card: #ffffff;
+                --inner: #f5f5f8;
+                --inner-2: #ebebef;
+                --border: #e2e2e8;
+                --inner-border: #d4d4dc;
+                --text: #111114;
+                --muted: #686872;
+                --green: #28cd41;
+                --green-glow: rgba(40, 205, 65, 0.65);
+                --led-off: #d2e4d6;
+                --pop-bg: #7d7d83;
+                --pop-border: rgba(255, 255, 255, 0.42);
+                --pop-line: rgba(255, 255, 255, 0.34);
+                --pop-sub: rgba(255, 255, 255, 0.82);
+                --pop-muted: rgba(255, 255, 255, 0.78);
+                --pop-shadow:
+                    0 18px 38px rgba(0, 0, 0, 0.18),
+                    0 0 0 1px rgba(0, 0, 0, 0.08);
             }
 
             * {
@@ -147,17 +222,15 @@ const jsonLd = {
                 padding: 0;
             }
 
+            html,
             body {
-                background: radial-gradient(
-                    circle at 50% 0%,
-                    #171720 0%,
-                    var(--bg) 55%
-                );
+                width: 100%;
+                min-height: 100dvh;
+                background: var(--bg);
                 color: var(--text);
                 font-family:
-                    -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                    "SF Pro Display", "Helvetica Neue", sans-serif;
-                line-height: 1.5;
+                    -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "SF Pro Text", "Inter", sans-serif;
                 -webkit-font-smoothing: antialiased;
             }
 
@@ -166,983 +239,1259 @@ const jsonLd = {
                 text-decoration: none;
             }
 
-            .container {
-                max-width: 1040px;
-                margin: 0 auto;
-                padding: 0 24px;
-            }
-
-            /* Top Nav */
-            nav {
+            /* First Screen: Full-Viewport Interlocking Bento Grid */
+            .viewport {
+                width: 100%;
+                height: 100dvh;
+                padding: clamp(12px, 1.8vw, 22px);
                 display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 20px 0;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .brand {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                font-weight: 700;
-                font-size: 17px;
-                letter-spacing: -0.02em;
-            }
-
-            .brand-icon {
-                width: 28px;
-                height: 28px;
-                border-radius: 7px;
-                background: #1c1c21;
-                border: 1px solid var(--border);
-                display: inline-flex;
                 align-items: center;
                 justify-content: center;
             }
 
-            .nav-links {
+            .bento {
+                width: 100%;
+                max-width: 1380px;
+                height: 100%;
+                max-height: 860px;
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                grid-template-rows: repeat(6, 1fr);
+                gap: clamp(10px, 1vw, 14px);
+            }
+
+            .cell {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 24px;
+                padding: clamp(16px, 1.6vw, 24px);
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            /* Staggered Interlocking Bento Spans (No full-height columns) */
+            .cell-hero {
+                grid-column: 1 / 6;
+                grid-row: 1 / 4;
+            }
+
+            .cell-topbar {
+                grid-column: 6 / 10;
+                grid-row: 1 / 3;
+            }
+
+            .cell-dnd {
+                grid-column: 10 / 13;
+                grid-row: 1 / 3;
+            }
+
+            .cell-key {
+                grid-column: 1 / 4;
+                grid-row: 4 / 7;
+            }
+
+            .cell-autostop {
+                grid-column: 4 / 6;
+                grid-row: 4 / 7;
+            }
+
+            .cell-app {
+                grid-column: 6 / 10;
+                grid-row: 3 / 7;
+            }
+
+            .cell-trackpad {
+                grid-column: 10 / 13;
+                grid-row: 3 / 7;
+            }
+
+            /* Card Typography */
+            .cell-title {
+                font-size: clamp(14.5px, 1.15vw, 17px);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                color: var(--text);
+            }
+
+            .cell-sub {
+                font-size: 12.5px;
+                color: var(--muted);
+                margin-top: 3px;
+                line-height: 1.4;
+            }
+
+            .cell-footer {
+                z-index: 2;
+            }
+
+            /* Cell 1: Hero */
+            .hero-top {
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                justify-content: space-between;
             }
 
-            .btn {
+            .brand-pill {
                 display: inline-flex;
                 align-items: center;
-                gap: 8px;
-                padding: 9px 16px;
-                border-radius: 999px;
-                font-size: 13px;
+                gap: 9px;
+                font-size: 15px;
                 font-weight: 600;
-                border: 1px solid var(--border);
-                background: transparent;
-                color: var(--text);
-                cursor: pointer;
-                transition: all 0.15s ease;
+                letter-spacing: -0.015em;
             }
 
-            .btn:hover {
-                border-color: rgba(255, 255, 255, 0.35);
-                background: rgba(255, 255, 255, 0.05);
+            .brand-bell {
+                width: 16px;
+                height: 16px;
+                fill: var(--text);
+                display: block;
             }
 
-            .btn-primary {
-                background: var(--text);
-                color: #09090b;
-                border-color: var(--text);
-            }
-
-            .btn-primary:hover {
-                background: #ffffff;
-                transform: translateY(-1px);
-            }
-
-            /* Hero */
-            .hero {
-                text-align: center;
-                padding: 56px 0 32px;
-            }
-
-            .badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                padding: 5px 12px;
+            .theme-toggle {
+                width: 58px;
+                height: 30px;
+                padding: 3px;
                 border-radius: 999px;
                 border: 1px solid var(--border);
-                background: rgba(255, 255, 255, 0.03);
-                font-size: 12px;
-                font-weight: 500;
-                color: var(--muted);
-                margin-bottom: 18px;
+                background: var(--inner);
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
             }
 
-            .badge-dot {
-                width: 7px;
-                height: 7px;
+            .theme-icon {
+                width: 22px;
+                height: 22px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                color: var(--muted);
+                transition: color 0.2s ease;
+            }
+
+            .theme-icon svg {
+                width: 13px;
+                height: 13px;
+                fill: currentColor;
+            }
+
+            .theme-thumb {
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                width: 22px;
+                height: 22px;
                 border-radius: 50%;
-                background: var(--green);
-                box-shadow: 0 0 8px var(--green);
+                background: var(--text);
+                transition: transform 0.22s cubic-bezier(0.2, 0.85, 0.3, 1);
+                z-index: 1;
             }
 
-            h1 {
-                font-size: clamp(32px, 5vw, 52px);
-                font-weight: 800;
-                letter-spacing: -0.035em;
+            html:not([data-theme="light"]) .theme-icon-moon {
+                color: var(--bg);
+            }
+
+            html[data-theme="light"] .theme-thumb {
+                transform: translateX(28px);
+            }
+
+            html[data-theme="light"] .theme-icon-sun {
+                color: var(--bg);
+            }
+
+            .hero-copy {
+                margin: auto 0;
+                padding: 8px 0;
+            }
+
+            .hero-copy h1 {
+                font-size: clamp(24px, 2.5vw, 36px);
+                font-weight: 700;
+                letter-spacing: -0.04em;
                 line-height: 1.08;
-                max-width: 780px;
-                margin: 0 auto 16px;
+                margin-bottom: 10px;
             }
 
-            .subtitle {
-                font-size: clamp(16px, 2vw, 19px);
+            .hero-copy p {
+                font-size: clamp(13px, 1vw, 14.5px);
                 color: var(--muted);
-                max-width: 650px;
-                margin: 0 auto 28px;
+                line-height: 1.5;
+                max-width: 44ch;
             }
 
             .hero-actions {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                gap: 12px;
+                gap: 10px;
                 flex-wrap: wrap;
-                margin-bottom: 14px;
             }
 
-            .hero-note {
-                font-size: 12px;
-                color: var(--muted);
-            }
-
-            /* Interactive Hardware Showcase */
-            .showcase {
-                margin: 28px 0 56px;
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: 20px;
-                overflow: hidden;
-                box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
-            }
-
-            /* Simulated macOS Top Bezel + Camera Notch + Menu Bar */
-            .mac-bezel {
-                background: #050507;
-                padding-top: 6px;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .mac-menubar {
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 16px;
-                font-size: 12px;
+            .btn-primary {
+                height: 38px;
+                padding: 0 18px;
+                border-radius: 999px;
+                background: var(--text);
+                color: var(--bg);
+                font-size: 12.5px;
                 font-weight: 600;
-                background: rgba(25, 25, 32, 0.85);
-                position: relative;
-            }
-
-            .menubar-left,
-            .menubar-right {
-                display: flex;
-                align-items: center;
-                gap: 14px;
-            }
-
-            .mac-notch {
-                position: absolute;
-                left: 50%;
-                top: -6px;
-                transform: translateX(-50%);
-                width: 156px;
-                height: 28px;
-                background: #000000;
-                border-bottom-left-radius: 10px;
-                border-bottom-right-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-top: none;
-            }
-
-            .camera-lens {
-                width: 10px;
-                height: 10px;
-                border-radius: 50%;
-                background: radial-gradient(
-                    circle at 35% 35%,
-                    #2b3a55,
-                    #090d16 70%
-                );
-                border: 1px solid #222;
-            }
-
-            .camera-led {
-                width: 7px;
-                height: 7px;
-                border-radius: 50%;
-                background: #19331e;
-                transition: all 0.08s ease;
-            }
-
-            .camera-led.on {
-                background: var(--green);
-                box-shadow: 0 0 10px 3px var(--green-glow);
-            }
-
-            .menubar-bell {
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
-                padding: 3px 8px;
-                border-radius: 5px;
-                background: rgba(255, 255, 255, 0.12);
-            }
-
-            /* Showcase Grid: Left = MacBook Hardware, Right = Native Popover UI */
-            .showcase-body {
-                display: grid;
-                grid-template-columns: 1.35fr 1fr;
-                gap: 24px;
-                padding: 28px;
-                align-items: center;
-            }
-
-            @media (max-width: 860px) {
-                .showcase-body {
-                    grid-template-columns: 1fr;
-                }
-            }
-
-            .hardware-stage {
-                display: flex;
-                flex-direction: column;
-                gap: 18px;
-            }
-
-            .stage-controls {
-                display: flex;
-                flex-wrap: wrap;
                 gap: 8px;
-                align-items: center;
             }
 
-            .status-pill {
-                font-size: 12px;
-                color: var(--muted);
-                margin-left: auto;
-            }
-
-            /* Typing Proof Bar */
-            .typing-bar {
-                background: #0d0d10;
+            .btn-ghost {
+                height: 38px;
+                padding: 0 16px;
+                border-radius: 999px;
                 border: 1px solid var(--border);
-                border-radius: 10px;
-                padding: 10px 14px;
-                display: flex;
+                background: var(--inner);
+                color: var(--text);
+                font-size: 12.5px;
+                font-weight: 500;
+                display: inline-flex;
                 align-items: center;
-                justify-content: space-between;
-                font-size: 13px;
+                gap: 7px;
             }
 
-            .typing-text {
-                font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-                color: #d4d4d8;
+            .btn-ghost svg {
+                width: 14px;
+                height: 14px;
+                fill: currentColor;
             }
 
-            .typing-badge {
-                font-size: 11px;
-                color: var(--green);
-                font-weight: 600;
-            }
-
-            /* MacBook Keyboard Deck */
-            .keyboard-deck {
-                background: #1b1b20;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 14px;
-                padding: 12px;
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            }
-
-            .key-row {
-                display: flex;
-                gap: 6px;
-            }
-
-            .key {
-                background: #0d0d10;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-bottom-width: 2px;
-                border-radius: 6px;
-                height: 40px;
+            /* Visual Stage inside Bento Cards */
+            .visual-stage {
                 flex: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 11px;
-                font-weight: 500;
-                color: #d4d4d8;
                 position: relative;
+                width: 100%;
+                min-height: 0;
                 user-select: none;
             }
 
-            .key.wide-1 {
-                flex: 1.5;
-                justify-content: flex-start;
-                padding-left: 10px;
+            /* Cell 2: MacBook Top Bezel & Camera LED Blinking Visual */
+            .mac-top-frame {
+                width: 100%;
+                max-width: 320px;
+                height: 54px;
+                background: var(--inner);
+                border: 1px solid var(--inner-border);
+                border-radius: 14px;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
             }
 
-            .key.wide-caps {
-                flex: 1.85;
-                justify-content: flex-start;
-                padding-left: 10px;
-                padding-top: 10px;
-                cursor: pointer;
-                border-color: rgba(255, 255, 255, 0.24);
+            .mac-notch-housing {
+                width: 124px;
+                height: 28px;
+                background: #09090b;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                border: 1px solid var(--inner-border);
+                border-top: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
             }
 
-            .key.wide-caps:hover {
-                border-color: rgba(255, 255, 255, 0.45);
-            }
-
-            .key.wide-space {
-                flex: 4.5;
-            }
-
-            .caps-led {
-                position: absolute;
-                top: 7px;
-                left: 10px;
-                width: 6px;
-                height: 6px;
+            .cam-optic {
+                width: 9px;
+                height: 9px;
                 border-radius: 50%;
-                background: #233326;
+                background: #161822;
+                border: 1px solid #2c2c38;
+            }
+
+            .cam-blink-light {
+                width: 6.5px;
+                height: 6.5px;
+                border-radius: 50%;
+                background: #1b2e20;
+                transition: all 0.08s ease;
+            }
+
+            .cam-blink-light.lit {
+                background: var(--green);
+                box-shadow:
+                    0 0 8px 2px var(--green-glow),
+                    0 0 18px 5px rgba(48, 209, 88, 0.4);
+            }
+
+            .mb-sys-icon {
+                width: 13px;
+                height: 13px;
+                fill: var(--text);
+                display: block;
+            }
+
+            .mb-loc-icon {
+                width: 9px;
+                height: 9px;
+                fill: var(--text);
+                display: block;
+                margin-left: -4px;
+            }
+
+            .mb-clock {
+                font-variant-numeric: tabular-nums;
+                white-space: nowrap;
+                color: var(--text);
+                font-size: 11px;
+                font-weight: 500;
+            }
+
+            /* Cell 3: Author GitHub Card */
+            .author-card {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
+                border-radius: 16px;
+                background: var(--inner);
+                border: 1px solid var(--inner-border);
+            }
+
+            .author-avatar {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: var(--inner-2);
+                border: 1px solid var(--inner-border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .author-avatar svg {
+                width: 19px;
+                height: 19px;
+                fill: var(--text);
+            }
+
+            .author-meta {
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+            }
+
+            .author-handle {
+                font-size: 13.5px;
+                font-weight: 600;
+                color: var(--text);
+            }
+
+            .author-role {
+                font-size: 11px;
+                color: var(--muted);
+            }
+
+            /* Cell 4: Key Blinking Visual */
+            .keyboard-closeup {
+                display: flex;
+                gap: 8px;
+                padding: 10px;
+                background: var(--inner);
+                border: 1px solid var(--inner-border);
+                border-radius: 14px;
+                width: 100%;
+                max-width: 260px;
+            }
+
+            .hw-key {
+                height: 58px;
+                border-radius: 9px;
+                background: var(--card);
+                border: 1px solid var(--inner-border);
+                border-bottom-width: 3px;
+                padding: 8px 11px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                position: relative;
+                color: var(--muted);
+                font-size: 11.5px;
+                font-weight: 500;
+            }
+
+            .hw-key.key-main {
+                flex: 1.8;
+                color: var(--text);
+            }
+
+            .hw-key.key-letter {
+                flex: 1;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                color: var(--muted);
+            }
+
+            .key-led-pinhole {
+                position: absolute;
+                top: 9px;
+                left: 11px;
+                width: 6.5px;
+                height: 6.5px;
+                border-radius: 50%;
+                background: var(--led-off);
                 transition: all 0.06s ease;
             }
 
-            .caps-led.on {
+            .key-led-pinhole.lit {
                 background: var(--green);
-                box-shadow: 0 0 10px 3px var(--green-glow);
+                box-shadow:
+                    0 0 8px 2px var(--green-glow),
+                    0 0 18px 5px rgba(48, 209, 88, 0.4);
             }
 
-            /* Force Touch Trackpad */
-            .trackpad-wrap {
+            /* Cell 5: Auto-Stop Visual */
+            .autostop-stack {
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
             }
 
-            .trackpad {
-                width: 250px;
-                height: 130px;
-                background: linear-gradient(180deg, #1b1b21 0%, #15151a 100%);
-                border: 1px solid rgba(255, 255, 255, 0.14);
-                border-radius: 14px;
-                position: relative;
+            .stop-chip {
+                padding: 9px 12px;
+                border-radius: 11px;
+                background: var(--inner);
+                border: 1px solid var(--inner-border);
+                font-size: 11.5px;
+                font-weight: 500;
+                color: var(--text);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .stop-kbd {
+                padding: 2px 6px;
+                border-radius: 5px;
+                background: var(--inner-2);
+                border: 1px solid var(--inner-border);
+                font-size: 10px;
+                color: var(--muted);
+            }
+
+            /* Cell 6: App Popover Screenshot Visual */
+            .popover-showcase {
+                width: 100%;
+                max-width: 304px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .menubar-strip {
+                width: 100%;
+                height: 28px;
+                padding: 0 10px;
+                margin-bottom: 6px;
+                border-radius: 9px;
+                background: var(--inner);
+                border: 1px solid var(--inner-border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .menubar-strip-right {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+            }
+
+            .menubar-pill-top {
+                width: 34px;
+                height: 20px;
+                border-radius: 999px;
+                background: var(--inner-2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid var(--inner-border);
+            }
+
+            .menubar-pill-top svg {
+                width: 11px;
+                height: 11px;
+                fill: var(--text);
+            }
+
+            .popover-card {
+                width: 100%;
+                background: var(--pop-bg);
+                backdrop-filter: blur(24px) saturate(140%);
+                color: #ffffff;
+                border: 1px solid var(--pop-border);
+                border-radius: 18px;
+                padding: 13px 15px;
+                box-shadow: var(--pop-shadow);
+                position: relative;
+                transition:
+                    background 0.2s ease,
+                    border-color 0.2s ease,
+                    box-shadow 0.2s ease;
+            }
+
+            .popover-card::before {
+                content: "";
+                position: absolute;
+                top: -5px;
+                left: 22px;
+                transform: rotate(45deg);
+                width: 9px;
+                height: 9px;
+                background: var(--pop-bg);
+                border-left: 1px solid var(--pop-border);
+                border-top: 1px solid var(--pop-border);
+                transition:
+                    background 0.2s ease,
+                    border-color 0.2s ease;
+            }
+
+            .pop-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .pop-brand {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 13.5px;
+                font-weight: 700;
+            }
+
+            .pop-brand svg {
+                width: 13px;
+                height: 13px;
+                fill: #ffffff;
+            }
+
+            .pop-icons {
+                display: flex;
+                gap: 5px;
+            }
+
+            .pop-circle {
+                width: 23px;
+                height: 23px;
+                border-radius: 50%;
+                border: 1px solid var(--pop-line);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .pop-circle svg {
+                width: 10.5px;
+                height: 10.5px;
+                fill: #ffffff;
+            }
+
+            .pop-search {
+                height: 29px;
+                border-radius: 8px;
+                border: 1px solid var(--pop-line);
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                padding: 0 9px;
+                font-size: 11.5px;
+                color: var(--pop-muted);
+                margin-bottom: 10px;
+            }
+
+            .pop-search svg {
+                width: 11px;
+                height: 11px;
+                fill: var(--pop-muted);
+            }
+
+            .pop-sec {
+                font-size: 10.5px;
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: #ffffff;
+            }
+
+            .pop-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 3px 0;
+            }
+
+            .pop-app-ico {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+                background: #141417;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .pop-app-ico.wa svg {
+                width: 15px;
+                height: 15px;
+                fill: #30d158;
+            }
+
+            .pop-row-text {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .pop-row-name {
+                font-size: 12px;
+                font-weight: 500;
+                color: #ffffff;
+                line-height: 1.2;
+            }
+
+            .pop-row-sub {
+                font-size: 10px;
+                color: var(--pop-sub);
+            }
+
+            .pop-chevron {
+                font-size: 12px;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.85);
+                margin-right: 2px;
+            }
+
+            .pop-toggle {
+                width: 30px;
+                height: 18px;
+                border-radius: 999px;
+                background: #0a84ff;
+                position: relative;
+            }
+
+            .pop-toggle::after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: #ffffff;
+            }
+
+            .pop-plus {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                border: 1.5px solid #ffffff;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                line-height: 1;
+            }
+
+            /* Cell 7: Trackpad Vibrating Visual (no center dot) */
+            .trackpad-surface {
+                width: 100%;
+                max-width: 220px;
+                height: 136px;
+                border-radius: 15px;
+                background: var(--inner);
+                border: 1px solid var(--inner-border);
+                position: relative;
+                display: flex;
+                align-items: center;
                 justify-content: center;
                 overflow: hidden;
-                transition: transform 0.06s ease;
+                animation: tp-vibrate 0.18s infinite;
             }
 
-            .trackpad.buzzing {
-                animation: buzz-shake 0.16s infinite;
-                border-color: rgba(50, 215, 75, 0.45);
-            }
-
-            .ripple {
+            .tp-ring {
                 position: absolute;
-                width: 28px;
-                height: 28px;
+                width: 26px;
+                height: 26px;
                 border-radius: 50%;
-                border: 1.5px solid var(--green);
+                border: 1px solid var(--muted);
                 opacity: 0;
-                pointer-events: none;
             }
 
-            .trackpad.buzzing .ripple-1 {
-                animation: ripple-out 0.9s infinite ease-out;
+            .trackpad-surface .r1 {
+                animation: tp-pulse 1.2s infinite cubic-bezier(0.16, 1, 0.3, 1);
             }
 
-            .trackpad.buzzing .ripple-2 {
-                animation: ripple-out 0.9s 0.3s infinite ease-out;
+            .trackpad-surface .r2 {
+                animation: tp-pulse 1.2s 0.4s infinite
+                    cubic-bezier(0.16, 1, 0.3, 1);
             }
 
-            .trackpad-label {
-                font-size: 11px;
-                font-weight: 600;
-                color: var(--muted);
-                z-index: 1;
+            .trackpad-surface .r3 {
+                animation: tp-pulse 1.2s 0.8s infinite
+                    cubic-bezier(0.16, 1, 0.3, 1);
             }
 
-            .trackpad-sub {
-                font-size: 10px;
-                color: rgba(255, 255, 255, 0.4);
-                margin-top: 2px;
-                z-index: 1;
-            }
-
-            @keyframes ripple-out {
+            @keyframes tp-pulse {
                 0% {
-                    transform: scale(0.6);
-                    opacity: 0.85;
+                    transform: scale(0.4);
+                    opacity: 0.7;
                 }
                 100% {
-                    transform: scale(5.5);
+                    transform: scale(6);
                     opacity: 0;
                 }
             }
 
-            @keyframes buzz-shake {
+            @keyframes tp-vibrate {
                 0%,
                 100% {
                     transform: translate(0, 0);
                 }
                 25% {
-                    transform: translate(-1.5px, 1px);
+                    transform: translate(-1px, 0.6px);
                 }
                 50% {
-                    transform: translate(1.5px, -1px);
+                    transform: translate(1px, -0.6px);
                 }
                 75% {
-                    transform: translate(-1px, -1px);
+                    transform: translate(-0.6px, -0.6px);
                 }
             }
 
-            /* Replica of the Native Popover UI */
-            .app-popover {
-                background: #1c1c1f;
-                border: 1px solid rgba(255, 255, 255, 0.16);
-                border-radius: 18px;
-                padding: 18px 20px;
-                max-width: 340px;
-                width: 100%;
+            /* Below-the-Fold SEO & AEO FAQ Section */
+            .seo-section {
+                max-width: 1380px;
                 margin: 0 auto;
-                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+                padding: 48px clamp(12px, 1.8vw, 22px) 72px;
             }
 
-            .pop-top {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 14px;
+            .seo-header {
+                margin-bottom: 24px;
             }
 
-            .pop-back {
-                font-size: 13px;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                gap: 4px;
-            }
-
-            .pop-switch {
-                width: 38px;
-                height: 22px;
-                border-radius: 999px;
-                background: var(--blue);
-                position: relative;
-            }
-
-            .pop-switch::after {
-                content: "";
-                position: absolute;
-                top: 2px;
-                right: 2px;
-                width: 18px;
-                height: 18px;
-                border-radius: 50%;
-                background: #fff;
-            }
-
-            .pop-app {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                margin-bottom: 16px;
-            }
-
-            .pop-app-icon {
-                width: 42px;
-                height: 42px;
-                border-radius: 10px;
-                background: #25d366;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: 800;
-                color: #fff;
-                font-size: 20px;
-            }
-
-            .pop-app-name {
-                font-size: 19px;
+            .seo-header h2 {
+                font-size: clamp(22px, 2.2vw, 30px);
                 font-weight: 700;
+                letter-spacing: -0.03em;
             }
 
-            .pop-modes {
+            .faq-grid {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-                margin-bottom: 16px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
             }
 
-            .pop-mode-btn {
-                padding: 8px 6px;
-                border-radius: 9px;
-                font-size: 12px;
+            .faq-card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 22px 24px;
+            }
+
+            .faq-card h3 {
+                font-size: 15px;
                 font-weight: 600;
-                text-align: center;
-                border: 1px solid rgba(255, 255, 255, 0.22);
-                cursor: pointer;
-                background: transparent;
+                margin-bottom: 8px;
                 color: var(--text);
             }
 
-            .pop-mode-btn.active {
-                background: var(--text);
-                color: #111;
-                border-color: var(--text);
-            }
-
-            .pop-label {
-                font-size: 12px;
-                font-weight: 700;
-                margin-bottom: 6px;
-            }
-
-            .pop-input {
-                width: 100%;
-                padding: 8px 10px;
-                border-radius: 9px;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                font-size: 12px;
+            .faq-card p {
+                font-size: 13.5px;
                 color: var(--muted);
-                margin-bottom: 12px;
+                line-height: 1.55;
             }
 
-            .pop-more {
-                padding: 10px 12px;
-                border-radius: 9px;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                font-size: 12px;
-                font-weight: 600;
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 14px;
-            }
-
-            .pop-chips {
-                display: flex;
-                gap: 6px;
-                margin-bottom: 16px;
-            }
-
-            .pop-chip {
-                padding: 4px 10px;
-                border-radius: 999px;
-                font-size: 11px;
-                font-weight: 600;
-                border: 1px solid rgba(255, 255, 255, 0.22);
-            }
-
-            .pop-chip.active {
-                background: var(--text);
-                color: #111;
-                border-color: var(--text);
-            }
-
-            .pop-footer {
+            .seo-footer {
+                margin-top: 32px;
+                padding-top: 20px;
+                border-top: 1px solid var(--border);
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding-top: 6px;
+                font-size: 12.5px;
+                color: var(--muted);
+                flex-wrap: wrap;
+                gap: 12px;
             }
 
-            .pop-test-btn {
-                padding: 6px 14px;
-                border-radius: 999px;
-                font-size: 12px;
-                font-weight: 600;
-                background: var(--text);
-                color: #111;
-                border: none;
-                cursor: pointer;
-            }
+            /* Responsive Scaling */
+            @media (max-width: 1024px) {
+                .viewport {
+                    height: auto;
+                    min-height: 100dvh;
+                }
 
-            .pop-remove {
-                font-size: 12px;
-                font-weight: 600;
-                color: #ff453a;
-            }
+                .bento {
+                    height: auto;
+                    max-height: none;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: auto;
+                }
 
-            /* Feature Cards */
-            .features {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 18px;
-                margin-bottom: 64px;
-            }
+                .cell-hero {
+                    grid-column: 1 / 3;
+                    grid-row: auto;
+                    min-height: 250px;
+                }
 
-            @media (max-width: 780px) {
-                .features {
+                .cell-topbar,
+                .cell-dnd,
+                .cell-key,
+                .cell-autostop,
+                .cell-app,
+                .cell-trackpad {
+                    grid-column: auto;
+                    grid-row: auto;
+                    min-height: 220px;
+                }
+
+                .faq-grid {
                     grid-template-columns: 1fr;
                 }
             }
 
-            .card {
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: 16px;
-                padding: 22px;
-            }
+            @media (max-width: 680px) {
+                .bento {
+                    grid-template-columns: 1fr;
+                }
 
-            .card h2 {
-                font-size: 17px;
-                font-weight: 700;
-                margin-bottom: 8px;
-            }
-
-            .card p {
-                font-size: 14px;
-                color: var(--muted);
-            }
-
-            /* FAQ / AEO Section */
-            .faq-section {
-                margin-bottom: 72px;
-            }
-
-            .section-heading {
-                font-size: 26px;
-                font-weight: 800;
-                letter-spacing: -0.02em;
-                margin-bottom: 20px;
-            }
-
-            .faq-list {
-                display: grid;
-                gap: 12px;
-            }
-
-            details.faq-item {
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: 12px;
-                padding: 16px 20px;
-            }
-
-            details.faq-item summary {
-                font-size: 15px;
-                font-weight: 600;
-                cursor: pointer;
-                list-style: none;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            details.faq-item p {
-                margin-top: 10px;
-                font-size: 14px;
-                color: var(--muted);
-            }
-
-            footer {
-                border-top: 1px solid var(--border);
-                padding: 28px 0 44px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 13px;
-                color: var(--muted);
-                flex-wrap: wrap;
-                gap: 12px;
+                .cell-hero,
+                .cell-topbar,
+                .cell-dnd,
+                .cell-key,
+                .cell-autostop,
+                .cell-app,
+                .cell-trackpad {
+                    grid-column: 1 / -1;
+                }
             }
         </style>
     </head>
 
     <body>
-        <div class="container">
-            <nav>
-                <div class="brand">
-                    <span class="brand-icon">🔔</span>
-                    <span>Notification</span>
-                </div>
-                <div class="nav-links">
-                    <a
-                        class="btn"
-                        href={repoUrl}
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        GitHub
-                    </a>
-                    <a class="btn btn-primary" href={dmgUrl}>
-                        Download .DMG
-                    </a>
-                </div>
-            </nav>
-
-            <header class="hero">
-                <div class="badge">
-                    <span class="badge-dot"></span>
-                    <span>
-                        Native macOS Menu Bar App · Works in Do Not Disturb
-                    </span>
-                </div>
-                <h1>
-                    Physical notification lights &amp; trackpad vibrations for
-                    macOS.
-                </h1>
-                <p class="subtitle">
-                    Keep notification banners off and stay in flow.{" "}
-                    <strong>Notification</strong> blinks your MacBook's
-                    <strong>Caps Lock LED</strong>, pulses the{" "}
-                    <strong>green camera light</strong>, and vibrates your
-                    <strong>Force Touch trackpad</strong> when important apps
-                    message you.
-                </p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href={dmgUrl}>
-                        ⬇ Download Notification.dmg
-                    </a>
-                    <a
-                        class="btn"
-                        href={repoUrl}
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        View Source on GitHub
-                    </a>
-                </div>
-                <p class="hero-note">
-                    macOS 13+ · Apple Silicon &amp; Intel · Free &amp; Open
-                    Source by @humairaambreen
-                </p>
-            </header>
-
-            <!-- Interactive Hardware Visualizer -->
-            <section
-                class="showcase"
-                aria-label="Interactive MacBook notification hardware simulator"
-            >
-                <div class="mac-bezel">
-                    <div class="mac-menubar">
-                        <div class="menubar-left">
-                            <span></span>
+        <!-- Full-Viewport Staggered Bento Grid -->
+        <main class="viewport">
+            <div class="bento">
+                <!-- 1. Hero & Download Bento Cell (col 1-6, row 1-4) -->
+                <section
+                    class="cell cell-hero"
+                    aria-label="Notification for macOS overview"
+                >
+                    <div class="hero-top">
+                        <div class="brand-pill">
+                            <svg
+                                class="brand-bell"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm6.5-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a2 2 0 1 0-4 0v.68C7.13 5.36 5.5 7.92 5.5 11v5l-2 2v1h17v-1l-2-2Z" />
+                            </svg>
                             <span>Notification</span>
                         </div>
-                        <div
-                            class="mac-notch"
-                            title="MacBook Top Bezel & Camera Indicator LED"
+                        <button
+                            id="theme-switch"
+                            class="theme-toggle"
+                            type="button"
+                            aria-label="Toggle dark and light theme"
                         >
-                            <span class="camera-lens"></span>
-                            <span id="cam-led" class="camera-led on"></span>
-                        </div>
-                        <div class="menubar-right">
-                            <span class="menubar-bell">🔔</span>
-                            <span>Tue 9:41 AM</span>
+                            <span class="theme-thumb"></span>
+                            <span class="theme-icon theme-icon-moon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.6.9A8 8 0 0 0 19.9 14c.5-.3 1 .1.9.6-.9 4.2-4.5 7.4-8.7 7.4Z" />
+                                </svg>
+                            </span>
+                            <span class="theme-icon theme-icon-sun">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 16a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Zm10-7a1 1 0 0 1-1 1h-2a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1ZM5 12a1 1 0 0 1-1 1H2a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1Zm14.07-7.07a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.42-1.42l1.42-1.41a1 1 0 0 1 1.41 0ZM7.76 16.24a1 1 0 0 1 0 1.42l-1.42 1.41a1 1 0 0 1-1.41-1.41l1.41-1.42a1 1 0 0 1 1.42 0Zm11.31 2.83a1 1 0 0 1-1.41 0l-1.42-1.41a1 1 0 1 1 1.42-1.42l1.41 1.42a1 1 0 0 1 0 1.41ZM7.76 7.76a1 1 0 0 1-1.42 0L4.93 6.34a1 1 0 0 1 1.41-1.41l1.42 1.41a1 1 0 0 1 0 1.42Z" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="hero-copy">
+                        <h1>Silent hardware alerts for macOS.</h1>
+                        <p>
+                            Blink your MacBook key light, pulse the top bar
+                            camera indicator, and vibrate your Force Touch
+                            trackpad when messages arrive—even in Do Not
+                            Disturb.
+                        </p>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a class="btn-primary" href={dmgUrl}>
+                            <span>Download .DMG</span>
+                        </a>
+                        <a
+                            class="btn-ghost"
+                            href={repoUrl}
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 1.5C6.2 1.5 1.5 6.2 1.5 12c0 4.6 3 8.5 7.2 9.9.5.1.7-.2.7-.5v-1.9c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.1 3.1.8.1-.7.4-1.1.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.3.1-2.8 0 0 .9-.3 2.9 1.1.8-.2 1.7-.3 2.6-.3s1.8.1 2.6.3c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7 1 .7 2v2.9c0 .3.2.6.7.5 4.2-1.4 7.2-5.3 7.2-9.9 0-5.8-4.7-10.5-10.5-10.5Z" />
+                            </svg>
+                            <span>GitHub</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- 2. macOS Top Bar / Camera Indicator Blinking Bento Cell (col 6-10, row 1-3) -->
+                <section
+                    class="cell cell-topbar"
+                    aria-label="macOS top bar camera indicator blink"
+                >
+                    <div class="visual-stage">
+                        <div class="mac-top-frame">
+                            <div class="mac-notch-housing">
+                                <span class="cam-optic"></span>
+                                <span
+                                    id="v-cam-led"
+                                    class="cam-blink-light lit"
+                                ></span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="showcase-body">
-                    <div class="hardware-stage">
-                        <div class="stage-controls">
-                            <button
-                                id="sim-toggle-btn"
-                                class="btn btn-primary"
-                                type="button"
-                            >
-                                Stop Live Alert
-                            </button>
-                            <button id="sim-caps-btn" class="btn" type="button">
-                                Press Caps Lock (Auto-Stop)
-                            </button>
-                            <span id="sim-status" class="status-pill">
-                                Alerting: Blink + Camera + Buzz
-                            </span>
+                    <div class="cell-footer">
+                        <div class="cell-title">Top Bar Camera Light</div>
+                        <div class="cell-sub">
+                            Pulses the green light next to your camera without
+                            opening a window.
                         </div>
+                    </div>
+                </section>
 
-                        <div class="typing-bar">
-                            <span class="typing-text">
-                                typing stays lowercase while blinking_
+                <!-- 3. Author GitHub Bento Cell (col 10-13, row 1-3) -->
+                <a
+                    class="cell cell-dnd"
+                    href="https://github.com/humairaambreen"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Created by humairaambreen on GitHub"
+                >
+                    <div class="visual-stage">
+                        <div class="author-card">
+                            <span class="author-avatar">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 1.5C6.2 1.5 1.5 6.2 1.5 12c0 4.6 3 8.5 7.2 9.9.5.1.7-.2.7-.5v-1.9c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.1 3.1.8.1-.7.4-1.1.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.3.1-2.8 0 0 .9-.3 2.9 1.1.8-.2 1.7-.3 2.6-.3s1.8.1 2.6.3c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7 1 .7 2v2.9c0 .3.2.6.7.5 4.2-1.4 7.2-5.3 7.2-9.9 0-5.8-4.7-10.5-10.5-10.5Z" />
+                                </svg>
                             </span>
-                            <span class="typing-badge">
-                                ✓ Normal Typing Preserved
-                            </span>
-                        </div>
-
-                        <!-- Simulated MacBook Keyboard -->
-                        <div class="keyboard-deck">
-                            <div class="key-row">
-                                <div class="key wide-1">tab</div>
-                                <div class="key">Q</div>
-                                <div class="key">W</div>
-                                <div class="key">E</div>
-                                <div class="key">R</div>
-                                <div class="key">T</div>
-                                <div class="key">Y</div>
-                                <div class="key">U</div>
-                                <div class="key">I</div>
-                                <div class="key">O</div>
-                                <div class="key">P</div>
+                            <div class="author-meta">
+                                <span class="author-handle">
+                                    @humairaambreen
+                                </span>
+                                <span class="author-role">
+                                    github.com/humairaambreen
+                                </span>
                             </div>
-                            <div class="key-row">
-                                <div
-                                    id="key-capslock"
-                                    class="key wide-caps"
-                                    title="Click to press Caps Lock and stop the alert"
-                                >
-                                    <span
-                                        id="caps-led"
-                                        class="caps-led on"
-                                    ></span>
-                                    <span>caps lock</span>
+                        </div>
+                    </div>
+
+                    <div class="cell-footer">
+                        <div class="cell-title">Open Source</div>
+                        <div class="cell-sub">
+                            Crafted for macOS by @humairaambreen on GitHub.
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 4. Key Blinking Bento Cell (col 1-4, row 4-7) -->
+                <section
+                    class="cell cell-key"
+                    aria-label="MacBook key LED blinking"
+                >
+                    <div class="visual-stage">
+                        <div class="keyboard-closeup">
+                            <div class="hw-key key-main">
+                                <span
+                                    id="v-key-led"
+                                    class="key-led-pinhole lit"
+                                ></span>
+                                <span>caps lock</span>
+                            </div>
+                            <div class="hw-key key-letter">A</div>
+                            <div class="hw-key key-letter">S</div>
+                        </div>
+                    </div>
+
+                    <div class="cell-footer">
+                        <div class="cell-title">Key Light Blink</div>
+                        <div class="cell-sub">
+                            Blinks the green key LED directly while keeping
+                            typing normal.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Instant Auto-Stop Bento Cell (col 4-6, row 4-7) -->
+                <section
+                    class="cell cell-autostop"
+                    aria-label="Instant auto-stop controls"
+                >
+                    <div class="visual-stage">
+                        <div class="autostop-stack">
+                            <div class="stop-chip">
+                                <span>Press Key</span>
+                                <span class="stop-kbd">caps lock</span>
+                            </div>
+                            <div class="stop-chip">
+                                <span>Open App</span>
+                                <span class="stop-kbd">⌘ Tab</span>
+                            </div>
+                            <div class="stop-chip">
+                                <span>Duration</span>
+                                <span class="stop-kbd">10s – 5m</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cell-footer">
+                        <div class="cell-title">Smart Auto-Stop</div>
+                        <div class="cell-sub">
+                            Stops the instant you press Caps Lock or open the
+                            app.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Native macOS Menu Bar App Popover Bento Cell (col 6-10, row 3-7) -->
+                <section
+                    class="cell cell-app"
+                    aria-label="Notification macOS menu bar app interface"
+                >
+                    <div class="visual-stage">
+                        <div class="popover-showcase">
+                            <div class="menubar-strip">
+                                <div class="menubar-pill-top">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm6.5-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a2 2 0 1 0-4 0v.68C7.13 5.36 5.5 7.92 5.5 11v5l-2 2v1h17v-1l-2-2Z" />
+                                    </svg>
                                 </div>
-                                <div class="key">A</div>
-                                <div class="key">S</div>
-                                <div class="key">D</div>
-                                <div class="key">F</div>
-                                <div class="key">G</div>
-                                <div class="key">H</div>
-                                <div class="key">J</div>
-                                <div class="key">K</div>
-                                <div class="key">L</div>
+                                <div class="menubar-strip-right">
+                                    <svg
+                                        class="mb-sys-icon"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M7.5 4h9a4.5 4.5 0 1 1 0 9h-9a4.5 4.5 0 1 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm9 7h-9a4.5 4.5 0 1 0 0 9h9a4.5 4.5 0 1 0 0-9Zm0 7a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+                                    </svg>
+                                    <svg
+                                        class="mb-loc-icon"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M21 3 3 10.53v.98l6.84 2.65L12.48 21h.98L21 3Z" />
+                                    </svg>
+                                    <span id="v-menubar-clock" class="mb-clock">
+                                        Tue 10 Nov 2:58:44 AM
+                                    </span>
+                                </div>
                             </div>
-                            <div class="key-row">
-                                <div class="key wide-1">shift</div>
-                                <div class="key">Z</div>
-                                <div class="key">X</div>
-                                <div class="key">C</div>
-                                <div class="key">V</div>
-                                <div class="key">B</div>
-                                <div class="key">N</div>
-                                <div class="key">M</div>
-                                <div class="key wide-1">return</div>
-                            </div>
-                            <div class="key-row">
-                                <div class="key">fn</div>
-                                <div class="key">control</div>
-                                <div class="key">option</div>
-                                <div class="key">command</div>
-                                <div class="key wide-space"></div>
-                                <div class="key">command</div>
-                                <div class="key">option</div>
-                            </div>
-                        </div>
+                            <div class="popover-card">
+                                <div class="pop-head">
+                                    <div class="pop-brand">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm6.5-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a2 2 0 1 0-4 0v.68C7.13 5.36 5.5 7.92 5.5 11v5l-2 2v1h17v-1l-2-2Z" />
+                                        </svg>
+                                        <span>Notification</span>
+                                    </div>
+                                    <div class="pop-icons">
+                                        <span class="pop-circle">
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M7 5h3v14H7V5Zm7 0h3v14h-3V5Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="pop-circle">
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M12 1.5C6.2 1.5 1.5 6.2 1.5 12c0 4.6 3 8.5 7.2 9.9.5.1.7-.2.7-.5v-1.9c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.1 3.1.8.1-.7.4-1.1.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.3.1-2.8 0 0 .9-.3 2.9 1.1.8-.2 1.7-.3 2.6-.3s1.8.1 2.6.3c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7 1 .7 2v2.9c0 .3.2.6.7.5 4.2-1.4 7.2-5.3 7.2-9.9 0-5.8-4.7-10.5-10.5-10.5Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="pop-circle">
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58ZM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2Z" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
 
-                        <!-- Simulated Force Touch Trackpad -->
-                        <div class="trackpad-wrap">
-                            <div id="trackpad-box" class="trackpad buzzing">
-                                <span class="ripple ripple-1"></span>
-                                <span class="ripple ripple-2"></span>
-                                <span class="trackpad-label">
-                                    Force Touch Trackpad Haptics
-                                </span>
-                                <span class="trackpad-sub">
-                                    Vibrates without resting your hand
-                                </span>
+                                <div class="pop-search">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z" />
+                                    </svg>
+                                    <span>Search apps</span>
+                                </div>
+
+                                <div class="pop-sec">Your apps</div>
+                                <div
+                                    class="pop-row"
+                                    style="margin-bottom: 8px;"
+                                >
+                                    <div class="pop-app-ico wa">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M12 2a10 10 0 0 0-8.66 15l-1.34 5 5.13-1.31A10 10 0 1 0 12 2Zm5.46 14.12c-.23.65-1.34 1.24-1.86 1.32-.48.07-1.08.1-1.75-.11-.41-.13-.93-.31-1.6-.6-2.81-1.21-4.65-4.05-4.79-4.24-.14-.19-1.14-1.52-1.14-2.9 0-1.38.72-2.06.98-2.34.26-.28.56-.35.75-.35h.54c.17 0 .4-.07.63.48.23.56.79 1.93.86 2.07.07.14.12.3.02.49-.09.19-.14.3-.28.47-.14.16-.29.36-.42.49-.14.14-.29.29-.12.57.16.28.73 1.2 1.56 1.94 1.08.96 1.98 1.26 2.26 1.4.28.14.44.12.6-.07.16-.19.7-.81.88-1.09.19-.28.37-.23.63-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.16 1.33Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="pop-row-text">
+                                        <div class="pop-row-name">WhatsApp</div>
+                                        <div class="pop-row-sub">
+                                            Blink + Camera
+                                        </div>
+                                    </div>
+                                    <span class="pop-chevron">›</span>
+                                    <div class="pop-toggle"></div>
+                                </div>
+
+                                <div class="pop-sec">Recently notified</div>
+                                <div class="pop-row">
+                                    <div class="pop-app-ico">
+                                        <svg
+                                            width="14"
+                                            height="14"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                        >
+                                            <circle
+                                                cx="5"
+                                                cy="7"
+                                                r="2"
+                                                fill="#0a84ff"
+                                            />
+                                            <circle
+                                                cx="5"
+                                                cy="12"
+                                                r="2"
+                                                fill="#ff453a"
+                                            />
+                                            <circle
+                                                cx="5"
+                                                cy="17"
+                                                r="2"
+                                                fill="#ff9f0a"
+                                            />
+                                            <rect
+                                                x="9"
+                                                y="6"
+                                                width="11"
+                                                height="2"
+                                                rx="1"
+                                                fill="#8e8e93"
+                                            />
+                                            <rect
+                                                x="9"
+                                                y="11"
+                                                width="11"
+                                                height="2"
+                                                rx="1"
+                                                fill="#8e8e93"
+                                            />
+                                            <rect
+                                                x="9"
+                                                y="16"
+                                                width="11"
+                                                height="2"
+                                                rx="1"
+                                                fill="#8e8e93"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div class="pop-row-text">
+                                        <div class="pop-row-name">
+                                            Reminders
+                                        </div>
+                                    </div>
+                                    <span class="pop-plus">+</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Native App Popover Replica -->
-                    <div class="app-popover">
-                        <div class="pop-top">
-                            <span class="pop-back">‹ Apps</span>
-                            <span class="pop-switch"></span>
-                        </div>
-                        <div class="pop-app">
-                            <div class="pop-app-icon">W</div>
-                            <div class="pop-app-name">WhatsApp</div>
-                        </div>
-                        <div class="pop-modes">
-                            <button
-                                id="mode-blink"
-                                class="pop-mode-btn active"
-                                type="button"
-                            >
-                                Blink
-                            </button>
-                            <button
-                                id="mode-camera"
-                                class="pop-mode-btn active"
-                                type="button"
-                            >
-                                Camera
-                            </button>
-                            <button
-                                id="mode-buzz"
-                                class="pop-mode-btn active"
-                                type="button"
-                            >
-                                Buzz
-                            </button>
-                        </div>
-                        <div class="pop-label">Only when it contains</div>
-                        <div class="pop-input">
-                            Anything — or a name / website
-                        </div>
-                        <div class="pop-more">
-                            <span>More settings</span>
-                            <span>⌃</span>
-                        </div>
-                        <div class="pop-label">Stop after</div>
-                        <div class="pop-chips">
-                            <span class="pop-chip">10s</span>
-                            <span class="pop-chip active">30s</span>
-                            <span class="pop-chip">1m</span>
-                            <span class="pop-chip">2m</span>
-                            <span class="pop-chip">5m</span>
-                        </div>
-                        <div class="pop-footer">
-                            <button
-                                id="pop-test-btn"
-                                class="pop-test-btn"
-                                type="button"
-                            >
-                                Stop
-                            </button>
-                            <span class="pop-remove">Remove</span>
+                    <div class="cell-footer">
+                        <div class="cell-title">Menu Bar Control</div>
+                        <div class="cell-sub">
+                            Add apps, filter by keyword, and customize blink
+                            duration &amp; speed.
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Core Features -->
-            <section class="features">
-                <article class="card">
-                    <h2>Caps Lock LED (Light Only)</h2>
-                    <p>
-                        Drives the physical Caps Lock LED via IOKit HID without
-                        toggling Caps Lock on. Your letters never turn uppercase
-                        while the key blinks.
-                    </p>
-                </article>
-                <article class="card">
-                    <h2>Camera Indicator Light</h2>
-                    <p>
-                        Pulses the green light next to your MacBook's FaceTime
-                        camera on a separate schedule—with zero video capture
-                        and no preview window.
-                    </p>
-                </article>
-                <article class="card">
-                    <h2>Trackpad Haptic Buzz</h2>
-                    <p>
-                        Fires your MacBook's Force Touch actuator directly with
-                        customizable tap counts and strength, even when your
-                        hand isn't on the trackpad.
-                    </p>
-                </article>
-            </section>
+                <!-- 7. Trackpad Vibrating Bento Cell (col 10-13, row 3-7) -->
+                <section
+                    class="cell cell-trackpad"
+                    aria-label="Force Touch trackpad haptic vibration"
+                >
+                    <div class="visual-stage">
+                        <div class="trackpad-surface">
+                            <span class="tp-ring r1"></span>
+                            <span class="tp-ring r2"></span>
+                            <span class="tp-ring r3"></span>
+                        </div>
+                    </div>
 
-            <!-- FAQ Section for SEO & AEO -->
-            <section class="faq-section" id="faq">
-                <h2 class="section-heading">Frequently Asked Questions</h2>
-                <div class="faq-list">
-                    {faqs.map((item) => (
-                        <details class="faq-item" open>
-                            <summary>{item.q}</summary>
-                            <p>{item.a}</p>
-                        </details>
-                    ))}
-                </div>
-            </section>
+                    <div class="cell-footer">
+                        <div class="cell-title">Trackpad Vibration</div>
+                        <div class="cell-sub">
+                            Vibrates your Force Touch trackpad directly without
+                            resting your hand.
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
 
-            <footer>
+        <!-- Below-the-Fold SEO & AEO FAQ Section -->
+        <section
+            class="seo-section"
+            id="faq"
+            aria-label="Frequently Asked Questions"
+        >
+            <div class="seo-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                {faqs.map((item) => (
+                    <article class="faq-card">
+                        <h3>{item.q}</h3>
+                        <p>{item.a}</p>
+                    </article>
+                ))}
+            </div>
+            <footer class="seo-footer">
                 <span>
                     Notification for macOS · Built by{" "}
                     <a
@@ -1154,100 +1503,94 @@ const jsonLd = {
                     </a>
                 </span>
                 <div>
-                    <a href={dmgUrl}>Download DMG</a> ·{" "}
+                    <a href={dmgUrl}>Download .DMG</a> ·{" "}
                     <a href={repoUrl} target="_blank" rel="noopener">
                         GitHub
                     </a>{" "}
-                    · <a href="/llms.txt">llms.txt</a>
+                    · <a href="/llms.txt">llms.txt</a> ·{" "}
+                    <a href="/sitemap.xml">Sitemap</a>
                 </div>
             </footer>
-        </div>
+        </section>
 
         <script is:inline>
             (function () {
-                let running = true;
-                let useBlink = true;
-                let useCamera = true;
-                let useBuzz = true;
-                let ledOn = true;
+                let phase = true;
+                const keyLed = document.getElementById("v-key-led");
+                const camLed = document.getElementById("v-cam-led");
+                const clockEl = document.getElementById("v-menubar-clock");
 
-                const capsLed = document.getElementById("caps-led");
-                const camLed = document.getElementById("cam-led");
-                const trackpad = document.getElementById("trackpad-box");
-                const toggleBtn = document.getElementById("sim-toggle-btn");
-                const popTestBtn = document.getElementById("pop-test-btn");
-                const capsBtn = document.getElementById("sim-caps-btn");
-                const keyCaps = document.getElementById("key-capslock");
-                const statusEl = document.getElementById("sim-status");
+                const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                const months = [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ];
 
-                const modeBlinkBtn = document.getElementById("mode-blink");
-                const modeCamBtn = document.getElementById("mode-camera");
-                const modeBuzzBtn = document.getElementById("mode-buzz");
-
-                function syncUI() {
-                    modeBlinkBtn.classList.toggle("active", useBlink);
-                    modeCamBtn.classList.toggle("active", useCamera);
-                    modeBuzzBtn.classList.toggle("active", useBuzz);
-
-                    toggleBtn.textContent = running
-                        ? "Stop Live Alert"
-                        : "Test Live Alert";
-                    popTestBtn.textContent = running ? "Stop" : "Test";
-
-                    const parts = [];
-                    if (useBlink) parts.push("Blink");
-                    if (useCamera) parts.push("Camera");
-                    if (useBuzz) parts.push("Buzz");
-
-                    statusEl.textContent = running
-                        ? "Alerting: " + (parts.join(" + ") || "Off")
-                        : "Stopped (Press Test to start)";
-
-                    trackpad.classList.toggle("buzzing", running && useBuzz);
-                    if (!running) {
-                        capsLed.classList.remove("on");
-                        camLed.classList.remove("on");
-                    }
+                function updateClock() {
+                    if (!clockEl) return;
+                    const now = new Date();
+                    const dayName = days[now.getDay()];
+                    const dateNum = now.getDate();
+                    const monthName = months[now.getMonth()];
+                    let hours = now.getHours();
+                    const ampm = hours >= 12 ? "PM" : "AM";
+                    hours = hours % 12 || 12;
+                    const mins = String(now.getMinutes()).padStart(2, "0");
+                    const secs = String(now.getSeconds()).padStart(2, "0");
+                    clockEl.textContent =
+                        dayName +
+                        " " +
+                        dateNum +
+                        " " +
+                        monthName +
+                        "  " +
+                        hours +
+                        ":" +
+                        mins +
+                        ":" +
+                        secs +
+                        " " +
+                        ampm;
                 }
+
+                updateClock();
+                setInterval(updateClock, 1000);
 
                 setInterval(function () {
-                    if (!running) return;
-                    ledOn = !ledOn;
-                    capsLed.classList.toggle("on", useBlink && ledOn);
-                    camLed.classList.toggle("on", useCamera && ledOn);
-                }, 380);
+                    phase = !phase;
+                    keyLed.classList.toggle("lit", phase);
+                    camLed.classList.toggle("lit", phase);
+                }, 420);
 
-                function toggleRun() {
-                    running = !running;
-                    syncUI();
+                const themeBtn = document.getElementById("theme-switch");
+                if (themeBtn) {
+                    themeBtn.addEventListener("click", function () {
+                        const isLight =
+                            document.documentElement.getAttribute(
+                                "data-theme",
+                            ) === "light";
+                        if (isLight) {
+                            document.documentElement.removeAttribute(
+                                "data-theme",
+                            );
+                        } else {
+                            document.documentElement.setAttribute(
+                                "data-theme",
+                                "light",
+                            );
+                        }
+                    });
                 }
-
-                function stopByCaps() {
-                    running = false;
-                    syncUI();
-                    statusEl.textContent = "Stopped via Caps Lock key";
-                }
-
-                toggleBtn.addEventListener("click", toggleRun);
-                popTestBtn.addEventListener("click", toggleRun);
-                capsBtn.addEventListener("click", stopByCaps);
-                keyCaps.addEventListener("click", stopByCaps);
-
-                modeBlinkBtn.addEventListener("click", function () {
-                    useBlink = !useBlink;
-                    if (!useBlink && !useCamera && !useBuzz) useBuzz = true;
-                    syncUI();
-                });
-                modeCamBtn.addEventListener("click", function () {
-                    useCamera = !useCamera;
-                    if (!useBlink && !useCamera && !useBuzz) useBlink = true;
-                    syncUI();
-                });
-                modeBuzzBtn.addEventListener("click", function () {
-                    useBuzz = !useBuzz;
-                    if (!useBlink && !useCamera && !useBuzz) useBlink = true;
-                    syncUI();
-                });
             })();
         </script>
     </body>
